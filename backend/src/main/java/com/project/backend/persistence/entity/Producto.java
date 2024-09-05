@@ -2,8 +2,6 @@ package com.project.backend.persistence.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "productos")
 public class Producto {
