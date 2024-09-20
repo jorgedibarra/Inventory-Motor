@@ -5,7 +5,7 @@ public class Provider {
     private String name;
     private String identificationDocument;
     private String address;
-    private String phone;
+    private Long phone;
     private String email;
 
     public int getId() {
@@ -40,11 +40,11 @@ public class Provider {
         this.address = address;
     }
 
-    public String getPhone() {
+    public Long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Long phone) {
         this.phone = phone;
     }
 

@@ -20,7 +20,7 @@ public class Proveedor {
 
     private  String direccion;
 
-    private Integer celular;
+    private Long celular;
 
     private String correo;
 
@@ -59,11 +59,11 @@ public class Proveedor {
         this.direccion = direccion;
     }
 
-    public Integer getCelular() {
+    public Long getCelular() {
         return celular;
     }
 
-    public void setCelular(Integer celular) {
+    public void setCelular(Long celular) {
         this.celular = celular;
     }
 
