@@ -3,29 +3,30 @@ package com.project.backend.persistence.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "detallepedidos")
-public class DetallePedido {
+@Table(name = "detalleventas")
+public class DetalleVenta {
 
     @EmbeddedId
-    private DetallePedidoPK id;
+    private DetalleVentaPK id;
 
     private Integer cantidad;
+
     private Double total;
 
     @ManyToOne
-    @MapsId("idPedido")
-    @JoinColumn(name = "id_pedido", insertable = false, updatable = false)
-    private Pedido pedido;
+    @MapsId("idVenta")
+    @JoinColumn(name = "id_venta", insertable = false, updatable = false)
+    private Venta venta;
 
     @ManyToOne
     @JoinColumn(name = "id_producto", insertable = false, updatable = false)
     private Producto producto;
 
-    public DetallePedidoPK getId() {
+    public DetalleVentaPK getId() {
         return id;
     }
 
-    public void setId(DetallePedidoPK id) {
+    public void setId(DetalleVentaPK id) {
         this.id = id;
     }
 
@@ -45,12 +46,12 @@ public class DetallePedido {
         this.total = total;
     }
 
-    public Pedido getPedido() {
-        return pedido;
+    public Venta getVenta() {
+        return venta;
     }
 
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
+    public void setVenta(Venta venta) {
+        this.venta = venta;
     }
 
     public Producto getProducto() {

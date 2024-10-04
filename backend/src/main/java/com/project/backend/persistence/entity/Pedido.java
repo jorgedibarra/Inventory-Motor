@@ -23,7 +23,7 @@ public class Pedido {
     @JoinColumn(name = "id_proveedor", insertable = false, updatable = false)
     private Proveedor proveedor;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = {CascadeType.ALL})
     private List<DetallePedido> productos;
 
     public Integer getIdPedido() {
