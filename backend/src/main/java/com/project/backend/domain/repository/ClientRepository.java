@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface ClientRepository {
     List<Client> getAll();
-    Optional<Client> getClient(int clientId);
+    Optional<Client> getClient(Integer clientId);
     Client save(Client client);
-    void delete(int clientId);
+    void delete(Integer clientId);
     Client update(Client client);
 }

@@ -21,25 +21,25 @@ public class ProductoRepository implements ProductRepository {
 
     @Override
     public List<Product> getAll() {
-        List<Producto> productos = (List<Producto>) productoJpaRepository.findAll();
+        List<Producto> productos = productoJpaRepository.findByEstadoTrue();
         return productMapper.toProducts(productos);
     }
 
     @Override
-    public Optional<List<Product>> getByCategory(int categoryId) {
-        List<Producto> productos = productoJpaRepository.findByIdCategoriaOrderByNombreAsc(categoryId);
-        return Optional.of(productMapper.toProducts(productos));
+    public List<Product> getByCategory(Integer categoryId) {
+        List<Producto> productos = productoJpaRepository.findByIdCategoriaAndEstadoTrue(categoryId);
+        return productMapper.toProducts(productos);
     }
 
     @Override
-    public Optional<List<Product>> getScarseProducts(int quantity) {
+    public Optional<List<Product>> getScarseProducts(Integer quantity) {
         Optional<List<Producto>> productos = productoJpaRepository.findByCantidadLessThan(quantity);
         return productos.map(prods -> productMapper.toProducts(prods));
     }
 
     @Override
-    public Optional<Product> getProductById(int productId) {
-        return productoJpaRepository.findById(productId).map(producto -> productMapper.toProduct(producto));
+    public Optional<Product> getProductById(Integer productId) {
+        return productoJpaRepository.findByIdProductoAndEstadoTrue(productId).map(producto -> productMapper.toProduct(producto));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ProductoRepository implements ProductRepository {
     }
 
     @Override
-    public void delete(int productId) {
+    public void delete(Integer productId) {
         productoJpaRepository.deleteById(productId);
     }
 
@@ -57,7 +57,7 @@ public class ProductoRepository implements ProductRepository {
         return productoJpaRepository.findByNombreContainingIgnoreCase(nombre);
     }
 
-    public List<Producto> getByProveedor(int idProveedor){
+    public List<Producto> getByProveedor(Integer idProveedor){
         return productoJpaRepository.findByIdProveedor(idProveedor);
     }
 }

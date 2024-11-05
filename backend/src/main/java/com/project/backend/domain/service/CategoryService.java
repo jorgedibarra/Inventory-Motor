@@ -15,21 +15,31 @@ public class CategoryService {
 
     public List<Category> getAll(){
         return categoryRepository.getAll();
-    };
+    }
     public Optional<List<Category>> getActiveCategories(boolean active){
         return  categoryRepository.getActiveCategories(active);
-    };
+    }
 
     public Optional<Category> getCategoryById(int categoryId){
         return categoryRepository.getCategoryById(categoryId);
-    };
+    }
     public Category save(Category category){
         return  categoryRepository.save(category);
-    };
+    }
     public boolean delete(int categoryId){
         return getCategoryById(categoryId).map(category -> {
             categoryRepository.delete(categoryId);
             return true;
         }).orElse(false);
-    };
+    }
+
+    public Boolean changeStatus(Integer categoryId){
+        Optional<Category> category = categoryRepository.getCategoryById(categoryId);
+        if (category.isPresent()){
+            category.get().setActive(!category.get().isActive());
+            categoryRepository.save(category.get());
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,7 +1,9 @@
 package com.project.backend.domain.service;
 
 import com.project.backend.domain.Client;
+import com.project.backend.domain.dto.ClientDto;
 import com.project.backend.domain.repository.ClientRepository;
+import com.project.backend.persistence.mapper.ClientMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +16,19 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public List<Client> getAll() {
-        return clientRepository.getAll();
+    @Autowired
+    private ClientMapper mapper;
+
+    public List<ClientDto> getAll() {
+        return mapper.toClientDtos(clientRepository.getAll());
     }
 
-    public Optional<Client> getClient(int clientId) {
-        return clientRepository.getClient(clientId);
+    public Optional<ClientDto> getClient(int clientId) {
+        return clientRepository.getClient(clientId).map(client -> mapper.toClientDto(client));
     }
 
-    public Client save(Client client) {
-        return clientRepository.save(client);
+    public ClientDto save(Client client) {
+        return mapper.toClientDto(clientRepository.save(client));
     }
 
     public boolean delete(int clientId) {
@@ -33,7 +38,17 @@ public class ClientService {
         }).orElse(false);
     }
 
-    public Client update(Client client) {
-        return clientRepository.update(client);
+    public ClientDto update(Client client) {
+        return mapper.toClientDto(clientRepository.update(client));
+    }
+
+    public Boolean changeState(Integer clientId) {
+        Optional<Client> client = clientRepository.getClient(clientId);
+        if (client.isPresent()) {
+            client.get().setState(false);
+            clientRepository.update(client.get());
+            return true;
+        }
+        return false;
     }
 }

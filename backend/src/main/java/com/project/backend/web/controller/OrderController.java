@@ -28,8 +28,29 @@ public class OrderController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> getOrder(@PathVariable("id") Integer id) {
+        return orderService.getOrder(id)
+                .map(order -> new ResponseEntity<>(order, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @PostMapping("/save")
     public ResponseEntity<Order> save(@RequestBody Order order) {
         return new ResponseEntity<>(orderService.save(order), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/delete/{id}")
+    public ResponseEntity delete(@PathVariable("id") Integer id) {
+        if (orderService.changeState(id)) {
+            return new ResponseEntity(HttpStatus.OK);
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/update")
+    public ResponseEntity<Order> update(@RequestBody Order order) {
+        return new ResponseEntity<>(orderService.save(order), HttpStatus.OK);
     }
 }

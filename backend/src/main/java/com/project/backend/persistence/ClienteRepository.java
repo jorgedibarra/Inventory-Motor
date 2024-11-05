@@ -22,12 +22,12 @@ public class ClienteRepository implements ClientRepository {
 
     @Override
     public List<Client> getAll() {
-        return mapper.toClients((List<Cliente>) clienteJpaRepository.findAll());
+        return mapper.toClients(clienteJpaRepository.findByEstadoTrue());
     }
 
     @Override
-    public Optional<Client> getClient(int clientId) {
-        return clienteJpaRepository.findById(clientId).map(cliente -> mapper.toClient(cliente));
+    public Optional<Client> getClient(Integer clientId) {
+        return clienteJpaRepository.findByIdClienteAndEstadoTrue(clientId).map(cliente -> mapper.toClient(cliente));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ClienteRepository implements ClientRepository {
     }
 
     @Override
-    public void delete(int clientId) {
+    public void delete(Integer clientId) {
         clienteJpaRepository.deleteById(clientId);
 
     }

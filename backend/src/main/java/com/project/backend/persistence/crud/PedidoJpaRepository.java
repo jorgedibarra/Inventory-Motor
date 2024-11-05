@@ -7,5 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PedidoJpaRepository extends JpaRepository<Pedido, Integer> {
-    Optional<List<Pedido>> findByIdProveedor(Integer idProveedor);
+    Optional<List<Pedido>> findByIdProveedorAndEstadoTrue(Integer idProveedor);
+    List<Pedido> findByEstadoTrue();
+    Optional<Pedido> findByIdPedidoAndEstadoTrue(Integer idProveedor);
+
 }

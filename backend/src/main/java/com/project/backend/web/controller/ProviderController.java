@@ -35,10 +35,15 @@ public class ProviderController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteProvider(@PathVariable("id") int providerId) {
-        if (providerService.delete(providerId)) {
+        if (providerService.changeState(providerId)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Provider> updateProvider(@RequestBody Provider provider) {
+        return new ResponseEntity<>(providerService.save(provider), HttpStatus.OK);
     }
 }

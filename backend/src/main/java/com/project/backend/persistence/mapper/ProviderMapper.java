@@ -18,6 +18,7 @@ public interface ProviderMapper {
             @Mapping(source = "direccion", target = "address"),
             @Mapping(source = "celular", target = "phone"),
             @Mapping(source = "correo", target = "email"),
+            @Mapping(source = "estado", target = "state")
     })
     Provider toProvider(Proveedor proveedor);
     List<Provider> toProviders(List<Proveedor> proveedores);

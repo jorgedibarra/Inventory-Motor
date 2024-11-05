@@ -32,4 +32,14 @@ public class ProviderService {
             return true;
         }).orElse(false);
     }
+
+    public Boolean changeState(Integer providerId) {
+        Optional<Provider> provider = providerRepository.getProviderById(providerId);
+        if (provider.isPresent()) {
+            provider.get().setState(false);
+            providerRepository.update(provider.get());
+            return true;
+        }
+        return false;
+    }
 }

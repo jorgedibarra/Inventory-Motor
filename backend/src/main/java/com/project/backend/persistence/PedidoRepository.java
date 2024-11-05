@@ -22,12 +22,17 @@ public class PedidoRepository implements OrderRepository {
 
     @Override
     public List<Order> getAll() {
-        return mapper.toOrders((List<Pedido>) pedidoJpaRepository.findAll());
+        return mapper.toOrders(pedidoJpaRepository.findByEstadoTrue());
     }
 
     @Override
     public Optional<List<Order>> getByProvider(Integer providerId) {
-        return pedidoJpaRepository.findByIdProveedor(providerId).map(pedidos -> mapper.toOrders(pedidos));
+        return pedidoJpaRepository.findByIdProveedorAndEstadoTrue(providerId).map(pedidos -> mapper.toOrders(pedidos));
+    }
+
+    @Override
+    public Optional<Order> getOrder(Integer providerId) {
+        return pedidoJpaRepository.findByIdPedidoAndEstadoTrue(providerId).map(pedido -> mapper.toOrder(pedido));
     }
 
     @Override
@@ -35,5 +40,10 @@ public class PedidoRepository implements OrderRepository {
         Pedido pedido = mapper.toPedido(order);
         pedido.getProductos().forEach(producto -> producto.setPedido(pedido));
         return mapper.toOrder(pedidoJpaRepository.save(pedido));
+    }
+
+    @Override
+    public Void delete(Integer orderId) {
+        return null;
     }
 }
