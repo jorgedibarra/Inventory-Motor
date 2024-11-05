@@ -1,6 +1,7 @@
 package com.project.backend.persistence.mapper;
 
 import com.project.backend.domain.Product;
+import com.project.backend.domain.dto.ProductDto;
 import com.project.backend.persistence.entity.Producto;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -22,6 +23,7 @@ public interface ProductMapper {
             @Mapping(source = "iva", target = "vat"),
             @Mapping(source = "cantidad", target = "stock"),
             @Mapping(source = "fotoProducto", target = "image"),
+            @Mapping(source = "estado", target = "state"),
             @Mapping(source = "categoria", target = "category"),
             @Mapping(source = "proveedor", target = "provider"),
     })
@@ -30,4 +32,26 @@ public interface ProductMapper {
 
     @InheritInverseConfiguration
     Producto toProducto(Product product);
+
+    @Mappings({
+            @Mapping(source = "productId", target = "productId"),
+            @Mapping(source = "name", target = "name"),
+            @Mapping(source = "description", target = "description"),
+            @Mapping(source = "categoryId", target = "categoryId"),
+            @Mapping(source = "providerId", target = "providerId"),
+            @Mapping(source = "priceSale", target = "priceSale"),
+            @Mapping(source = "priceBuy", target = "priceBuy"),
+            @Mapping(source = "vat", target = "vat"),
+            @Mapping(source = "stock", target = "stock"),
+            @Mapping(source = "image", target = "image"),
+    })
+    ProductDto toProductDto(Product product);
+    List<ProductDto> toProductsDto(List<Product> products);
+
+    @InheritInverseConfiguration
+    @Mappings({
+            @Mapping(target = "category", ignore = true),
+            @Mapping(target = "provider", ignore = true)
+    })
+    Product toProduct(ProductDto productDto);
 }

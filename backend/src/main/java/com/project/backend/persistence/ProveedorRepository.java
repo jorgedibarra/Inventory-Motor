@@ -22,13 +22,12 @@ public class ProveedorRepository implements ProviderRepository {
 
     @Override
     public List<Provider> getAll() {
-        List<Proveedor> proveedores = (List<Proveedor>) proveedorJpaRepository.findAll();
-        return providerMapper.toProviders(proveedores);
+        return providerMapper.toProviders(proveedorJpaRepository.findByEstadoTrue());
     }
 
     @Override
-    public Optional<Provider> getProviderById(int providerId) {
-        return proveedorJpaRepository.findById(providerId).map(proveedor -> providerMapper.toProvider(proveedor));
+    public Optional<Provider> getProviderById(Integer providerId) {
+        return proveedorJpaRepository.findByIdProveedorAndEstadoTrue(providerId).map(proveedor -> providerMapper.toProvider(proveedor));
     }
 
     @Override
@@ -38,7 +37,13 @@ public class ProveedorRepository implements ProviderRepository {
     }
 
     @Override
-    public void delete(int providerId) {
+    public void delete(Integer providerId) {
         proveedorJpaRepository.deleteById(providerId);
+    }
+
+    @Override
+    public Provider update(Provider provider) {
+        Proveedor proveedor = providerMapper.toProveedor(provider);
+        return providerMapper.toProvider(proveedorJpaRepository.save(proveedor));
     }
 }

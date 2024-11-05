@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface VentaJpaRepository extends JpaRepository<Venta, Integer> {
     Optional<List<Venta>> findByIdCliente(Integer idCliente);
+    List<Venta> findByEstadoTrue();
+    Optional<Venta> findByIdVentaAndEstadoTrue(Integer idVenta);
 }

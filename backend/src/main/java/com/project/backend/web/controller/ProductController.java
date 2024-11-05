@@ -1,6 +1,6 @@
 package com.project.backend.web.controller;
 
-import com.project.backend.domain.Product;
+import com.project.backend.domain.dto.ProductDto;
 import com.project.backend.domain.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,35 +16,39 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Product>> getAll() {
+    public ResponseEntity<List<ProductDto>> getAll() {
         return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<Product>> getByCategory(@PathVariable("categoryId") int category) {
-        return productService.getByCategory(category)
-                .map(products -> new ResponseEntity<>(products, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<List<ProductDto>> getByCategory(@PathVariable("categoryId") Integer category) {
+        return new ResponseEntity<>(productService.getByCategory(category), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") int productId) {
+    public ResponseEntity<ProductDto> getProduct(@PathVariable("id") int productId) {
         return productService.getProductById(productId)
                 .map(product -> new ResponseEntity<>(product, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto product) {
         return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deleteProduct(@PathVariable("id") int productId) {
-        if (productService.deleteById(productId)) {
+    public ResponseEntity deleteProduct(@PathVariable("id") Integer productId) {
+        if (productService.changeState(productId)) {
             return new ResponseEntity(HttpStatus.OK);
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto product) {
+        return new ResponseEntity<>(productService.save(product), HttpStatus.OK);
+    }
+
 }

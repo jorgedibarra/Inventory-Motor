@@ -22,13 +22,19 @@ public class VentaRepository implements SaleRepository {
 
     @Override
     public List<Sale> getAll() {
-        return mapper.toSales((List<Venta>) ventaJpaRepository.findAll());
+        return mapper.toSales(ventaJpaRepository.findByEstadoTrue());
     }
 
     @Override
     public Optional<List<Sale>> getByClient(Integer clientId) {
         return ventaJpaRepository.findByIdCliente(clientId)
                 .map(ventas -> mapper.toSales(ventas));
+    }
+
+    @Override
+    public Optional<Sale> getSale(Integer saleId) {
+        return ventaJpaRepository.findByIdVentaAndEstadoTrue(saleId)
+                .map(venta -> mapper.toSale(venta));
     }
 
     @Override

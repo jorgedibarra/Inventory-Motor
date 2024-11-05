@@ -9,16 +9,19 @@ import java.util.Optional;
 
 public interface ProductoJpaRepository extends JpaRepository<Producto, Integer> {
 
+    List<Producto> findByEstadoTrue();
+    Optional<Producto> findByIdProductoAndEstadoTrue(Integer idProveedor);
+
     // Usando sql nativo
     @Query(value = "SELECT * FROM productos WHERE id_categoria = ?", nativeQuery = true)
     List<Producto> getAllCategoria(int idCategoria);
 
     // Usando query methods
-    List<Producto> findByIdCategoriaOrderByNombreAsc(int idCategoria);
+    List<Producto> findByIdCategoriaAndEstadoTrue(Integer idCategoria);
 
-    Optional<List<Producto>> findByCantidadLessThan(int cantidad);
+    Optional<List<Producto>> findByCantidadLessThan(Integer cantidad);
 
     List<Producto> findByNombreContainingIgnoreCase(String nombre);
 
-    List<Producto> findByIdProveedor(int idProveedor);
+    List<Producto> findByIdProveedor(Integer idProveedor);
 }

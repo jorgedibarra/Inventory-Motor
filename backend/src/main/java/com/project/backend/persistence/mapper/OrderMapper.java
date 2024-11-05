@@ -16,7 +16,8 @@ public interface OrderMapper {
         @Mapping(source = "idPedido", target = "idOrder"),
         @Mapping(source = "idProveedor", target = "idProvider"),
         @Mapping(source = "fecha", target = "date"),
-        @Mapping(source = "productos", target = "products")
+        @Mapping(source = "productos", target = "products"),
+        @Mapping(source = "estado", target = "state")
     })
     Order toOrder(Pedido pedido);
     List<Order> toOrders(List<Pedido> pedidos);

@@ -7,6 +7,8 @@ import java.util.Optional;
 
 public interface OrderRepository {
     List<Order> getAll();
-    Optional<List<Order>> getByProvider(Integer providerId);
+    Optional<List<Order>> getByProvider(Integer orderId);
+    Optional<Order> getOrder(Integer orderId);
     Order save(Order order);
+    Void delete(Integer orderId);
 }

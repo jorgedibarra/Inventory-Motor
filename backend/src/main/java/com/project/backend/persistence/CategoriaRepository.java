@@ -21,8 +21,7 @@ public class CategoriaRepository implements CategoryRepository {
 
     @Override
     public List<Category> getAll() {
-        List<Categoria> categorias = (List<Categoria>) categoriaJpaRepository.findAll();
-        return categoryMapper.toCategorys(categorias);
+        return categoryMapper.toCategorys(categoriaJpaRepository.findByEstadoTrue());
     }
 
     @Override
@@ -33,7 +32,7 @@ public class CategoriaRepository implements CategoryRepository {
 
     @Override
     public Optional<Category> getCategoryById(int categoryId) {
-        return categoriaJpaRepository.findById(categoryId).map(categoria -> categoryMapper.toCategory(categoria));
+        return categoriaJpaRepository.findByIdCategoriaAndEstadoTrue(categoryId).map(categoria -> categoryMapper.toCategory(categoria));
     }
 
     @Override

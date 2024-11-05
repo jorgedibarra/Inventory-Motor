@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public interface ProviderRepository {
     List<Provider> getAll();
-    Optional<Provider> getProviderById(int providerId);
+    Optional<Provider> getProviderById(Integer providerId);
     Provider save(Provider provider);
-    void delete(int providerId);
+    void delete(Integer providerId);
+    Provider update(Provider provider);
 }
