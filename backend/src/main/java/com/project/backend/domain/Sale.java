@@ -15,5 +15,4 @@ public class Sale {
     private String paymentMethod;
     private Boolean state;
     private List<SaleItem> items;
-
 }

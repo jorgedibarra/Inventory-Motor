@@ -22,4 +22,11 @@ public class RoleController {
     public ResponseEntity<List<Role>> getAll() {
         return new ResponseEntity<>(roleService.getAll(), HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Role> getRoleById(String roleId) {
+        return roleService.getRole(roleId)
+                .map(role -> new ResponseEntity<>(role, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }

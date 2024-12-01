@@ -33,7 +33,7 @@ public class Venta {
     @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "venta", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "venta", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<DetalleVenta> productos;
 
 }

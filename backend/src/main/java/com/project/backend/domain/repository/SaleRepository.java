@@ -10,5 +10,6 @@ public interface SaleRepository {
     Optional<List<Sale>> getByClient(Integer clientId);
     Optional<Sale> getSale(Integer saleId);
     Sale save(Sale sale);
+    Sale update(Sale sale);
 
 }

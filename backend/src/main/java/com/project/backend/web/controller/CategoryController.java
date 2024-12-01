@@ -42,9 +42,9 @@ public class CategoryController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable("id")  int categoryId){
-        if (categoryService.changeStatus(categoryId)){
+        if (categoryService.delete(categoryId)){
             return new ResponseEntity(HttpStatus.OK);
-        } else {
+        }else{
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }

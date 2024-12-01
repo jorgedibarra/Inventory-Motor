@@ -1,16 +1,32 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../assets/css/InicioSesion.css";
 import Image from "../../assets/images/portada_ia.png";
+import { iniciarSesion } from "../../servicios/ServicioAutenticacion";
 
 const InicioSesion = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí iría la lógica para hacer la llamada al backend para autenticar al usuario
-    console.log("Email:", email);
-    console.log("Password:", password);
+    setError("");
+
+    try {
+      const { token } = await iniciarSesion(username, password); // Llama al servicio
+      localStorage.setItem("jwtToken", token); // Guarda el token en localStorage
+      localStorage.setItem("username", username); // Guarda el nombre de usuario
+      console.log("Inicio de sesión exitoso. Token guardado.");
+      console.log("Token:", token);
+      console.log("Usuario:", username);
+      navigate("/dashboard"); // Redirige al usuario
+    } catch (error) {
+      setError(
+        error.message || "Credenciales incorrectas. Por favor, intenta nuevamente."
+      );
+    }
   };
 
   return (
@@ -20,22 +36,23 @@ const InicioSesion = () => {
           <div className="form-container">
             <form onSubmit={handleSubmit}>
               <h2>Iniciar Sesion</h2>
+              {error && <p className="text-danger">{error}</p>}
               <div className="mb-3">
-                <label className="form-label">Correo</label>
+                <label className="form-label">Nombre de Usuario</label>
                 <input
-                  type="email"
+                  type="text"
                   className="form-control"
-                  id="EntradaCorreo"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  id="EntradaUsuario"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
                 />
               </div>
               <div className="mb-3">
-                <label class="form-label">Contraseña</label>
+                <label className="form-label">Contraseña</label>
                 <input
                   type="password"
-                  class="form-control"
+                  className="form-control"
                   id="EntradaContraseña"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

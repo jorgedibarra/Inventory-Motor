@@ -40,11 +40,11 @@ public class Producto {
 
     private Boolean estado;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria", insertable = false, updatable = false)
     private Categoria categoria;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_proveedor", insertable = false, updatable = false)
     private Proveedor proveedor;
 

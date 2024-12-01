@@ -21,6 +21,13 @@ public class SaleController {
         return new ResponseEntity<>(saleService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/{saleId}")
+    public ResponseEntity<Sale> getSale(@PathVariable("saleId") Integer saleId) {
+        return saleService.getSale(saleId)
+                .map(sale -> new ResponseEntity<>(sale, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @GetMapping("/client/{clientId}")
     public ResponseEntity<List<Sale>> getByClient(@PathVariable("clientId") Integer clientId) {
         return saleService.getByClient(clientId)
@@ -30,6 +37,11 @@ public class SaleController {
 
     @PostMapping("/save")
     public ResponseEntity<Sale> save(@RequestBody Sale sale) {
+        return new ResponseEntity<>(saleService.save(sale), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Sale> update(@RequestBody Sale sale) {
         return new ResponseEntity<>(saleService.save(sale), HttpStatus.CREATED);
     }
 }
