@@ -2,6 +2,8 @@
 
 Sistema de gestión de inventarios para la empresa Motorepuestos Jors, desarrollado con una arquitectura moderna utilizando **React**, **Spring Boot** y **MySQL**.
 
+🔗 **Accede a la aplicación aquí:** [Inventory Motor](https://jorgedibarra.github.io/inventario-front/)
+
 ## **Características principales** 🚀
 
 - **Gestión de productos**: Agregar, actualizar, eliminar y buscar productos.
